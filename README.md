@@ -1,50 +1,50 @@
-# React + TypeScript + Vite
+# Inventory Management Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is an Inventory Management Dashboard that allows users to manage their inventory items efficiently. It provides features such as adding, updating, deleting, sorting, and searching inventory items.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Add Item**: Add new inventory items with details like name, price, quantity, category, and last modified date.
+- **Update Item**: Update existing inventory items.
+- **Delete Item**: Remove inventory items from the list.
+- **Sort Items**: Sort items by name, price, quantity, category, or last modified date in ascending or descending order.
+- **Search Items**: Search items by name.
+- **Filter by Category**: Filter items based on their category.
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React**: Frontend library for building user interfaces.
+- **TypeScript**: Superset of JavaScript for type safety.
+- **API**: Backend API for managing inventory items.
+- **Lucide-react**: Icon library for React.
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+To get started with the project, follow these steps:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/your-username/gyanGrove.git
+    cd gyanGrove
+    ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+2. **Install dependencies**:
+    ```bash
+    npm install
+    ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+3. **Run the project**:
+    ```bash
+    npm run dev
+    ```
+
+4. **Open the application**:
+    Open your browser and navigate to `http://localhost:5173`.
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+
+## License
+
+This project is licensed under the MIT License.
