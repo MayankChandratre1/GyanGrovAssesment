@@ -90,7 +90,6 @@ const Inventory = () => {
     try {
       await inventoryApi.addInventoryItem(item);
       setItems([...items, item]);
-      setFilteredItems([...items, item]);
       setNewItem({
         _id: "",
         name: "",

@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { InventoryItem } from "@/types/inventoryItem";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 
 interface AddItemDialogProps {
   newItem: InventoryItem;
@@ -16,8 +17,10 @@ interface AddItemDialogProps {
 }
 
 const AddItemDialog = ({newItem, onNewItemChange, addItem}:AddItemDialogProps) => {
+  const [open, setOpen] = useState(false);
+  const closeDialog = () => setOpen(false);
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
     <DialogTrigger>
       <button className="p-3 bg-green-500 text-white rounded-lg flex items-center">
         <Plus className="w-5 h-5" />
@@ -61,6 +64,7 @@ const AddItemDialog = ({newItem, onNewItemChange, addItem}:AddItemDialogProps) =
           />
           <button onClick={()=>{
             addItem(newItem)
+            closeDialog()
           }} className="p-3 bg-green-500 text-white rounded-lg w-full mt-2">
             Add Item
           </button>
