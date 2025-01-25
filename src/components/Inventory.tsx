@@ -28,7 +28,7 @@ const Inventory = () => {
       try {
         const items = await inventoryApi.getInventoryItems();
         setItems(items);
-        setFilteredItems(items);
+        setFilteredItems(items.sort((a, b) => a.name.localeCompare(b.name)));
         const categories = items.map((item) => item.category);
         setCategories(["All", ...new Set(categories)]);
       } catch (error) {
@@ -45,51 +45,54 @@ const Inventory = () => {
   }, [items]);
 
   useEffect(() => {
-    filterCategory(category);
-  }, [category, sortBy, sortMode, search]);
+    setFilteredItems(filterItems());
+  }, [category, search, sortBy, sortMode]);
 
-  useEffect(() => {
-    searchItems(search);
-  }, [search]);
 
-  useEffect(()=>{
-    filterCategory(category);
-  },[category])
-
-  useEffect(()=>{
-    sortBy && sortItems(sortBy, sortMode);
-  },[sortBy, sortMode])
-
-  const searchItems = (search: string) => {
-    setSearch(search);
-    if(!search) {
-      setCategory("All");
-      setFilteredItems(items);
-      return;
+  const filterItems = (toFilterItems: InventoryItem[] | null = null) => {
+    let toFilter = toFilterItems || items;
+    if(category !== "All") {
+      toFilter = toFilter.filter((item) => item.category.toLowerCase() === category.toLowerCase());
     }
-    setFilteredItems(
-      filteredItems.filter((item) =>
-        item.name.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  };
-
-  const filterCategory = (category: string) => {
-    if (category === "All") {
-      setFilteredItems(items);
-    } else {
-      setFilteredItems(
-        filteredItems.filter(
-          (item) => item.category.toLowerCase() === category.toLowerCase()
-        )
-      );
+    if(search) {
+      toFilter = toFilter.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
     }
-  };
+    if(sortBy) {
+      switch(sortBy) {
+        case "name":
+          toFilter.sort((a, b) => a.name.localeCompare(b.name));
+          break;
+        case "price":
+          toFilter.sort((a, b) => a.price - b.price);
+          break;
+        case "quantity":
+          toFilter.sort((a, b) => a.quantity - b.quantity);
+          break;
+        case "category":
+          toFilter.sort((a, b) => a.category.localeCompare(b.category));
+          break;
+        case "lastModified":
+          toFilter.sort(
+            (a, b) =>
+              new Date(b.lastModified).getTime() -
+              new Date(a.lastModified).getTime()
+          );
+          break;
+      }
+      if(sortMode === "dsc") {
+        toFilter.reverse();
+      }
+    }
+    return toFilter;
+  }
+
+
 
   const addItem = async (item: InventoryItem) => {
     try {
       await inventoryApi.addInventoryItem(item);
-      setItems([...items, item]);
+      setFilteredItems(filterItems());
+      
       setNewItem({
         _id: "",
         name: "",
@@ -97,7 +100,7 @@ const Inventory = () => {
         quantity: 0,
         category: "",
         lastModified: new Date(),
-      })
+      });
     } catch (error) {
       console.log(error);
     }
@@ -113,39 +116,15 @@ const Inventory = () => {
     }
   };
 
-  const updateItem = async (id: string, updatedItem: InventoryItem) => {
+  const updateItem = async (id: string, updatedItemData: InventoryItem) => {
     try {
-      const newItems = await inventoryApi.updateInventoryItem(id, updatedItem);
-      setItems([...newItems]);
-      setFilteredItems([...newItems]);
+      const updatedItem = await inventoryApi.updateInventoryItem(id, updatedItemData);
+      setItems([...items.map((item) => (item._id === id ? updatedItem : item))]);
+      setFilteredItems([...filterItems([...items.map((item) => (item._id === id ? updatedItem : item))])]);
 
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const sortItems = (sortBy: string, mode: "asc" | "dsc") => {
-    const newItems = [...filteredItems];
-    if (sortBy === "name") {
-      newItems.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortBy === "price") {
-      newItems.sort((a, b) => a.price - b.price);
-    } else if (sortBy === "quantity") {
-      newItems.sort((a, b) => a.quantity - b.quantity);
-    } else if (sortBy === "category") {
-      newItems.sort((a, b) => a.category.localeCompare(b.category));
-    } else if (sortBy === "lastModified") {
-      newItems.sort(
-        (a, b) =>
-          new Date(b.lastModified).getTime() -
-          new Date(a.lastModified).getTime()
-      );
-    }
-    if (mode === "dsc") {
-      newItems.reverse();
-    }
-    
-    setFilteredItems([...newItems]);
   };
 
   const onNewItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -155,8 +134,11 @@ const Inventory = () => {
     })
   }
 
+  
+
   return (
-    <div className="container mx-auto p-4">
+    <div className="container relative mx-auto p-4">
+      <div className="sticky top-0 bg-white z-10 py-4">
       <div className="flex justify-between items-center gap-2">
         <input
           type="text"
@@ -173,6 +155,7 @@ const Inventory = () => {
               name="category" 
               id="category" 
               className="p-3 outline-none"
+              value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
               {categories.map((category) => (
@@ -188,6 +171,7 @@ const Inventory = () => {
               name="sortBy" 
               id="sortBy" 
               className="p-3 outline-none"
+              value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
             >
               <option className="p-2 text-sm md:text-lg" value={"name"}>
@@ -224,6 +208,7 @@ const Inventory = () => {
         </div>
         <AddItemDialog newItem={newItem} onNewItemChange={onNewItemChange} addItem={addItem} />
         
+      </div>
       </div>
         <ItemsTable removeItem={removeItem} updateItem={updateItem} items={filteredItems} />
     </div>

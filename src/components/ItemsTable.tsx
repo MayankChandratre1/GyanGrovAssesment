@@ -10,8 +10,8 @@ interface ItemsTableProps {
 
 const ItemsTable = ({items, removeItem, updateItem}: ItemsTableProps) => {
     return (
-        <div>
-            <table className="w-full mt-4 border border-gray-800 rounded-md overflow-y-auto">
+        <div className="">
+            <table className="w-full mt-4 border border-gray-800 rounded-md">
                 <thead className="bg-gray-800 text-white">
                     <tr>
                         <th className="p-3 text-left">Name</th>
@@ -22,7 +22,7 @@ const ItemsTable = ({items, removeItem, updateItem}: ItemsTableProps) => {
                         <th className="p-3 text-left">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="bg-white">
                     {items.length === 0 ? (
                         <tr>
                             <td colSpan={6} className="p-3 text-center">No items found</td>

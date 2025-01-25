@@ -67,13 +67,13 @@ const data: InventoryItem[] = [
     return item
 }
 
- const updateInventoryItem = async (id: string, item: InventoryItem): Promise<InventoryItem[]> => {
+ const updateInventoryItem = async (id: string, item: InventoryItem): Promise<InventoryItem> => {
     const index = data.findIndex(item => item._id === id)
     data[index] = {
         ...item,
         lastModified: new Date()
     }
-    return data
+    return data[index]
 }
 
  const deleteInventoryItem = async (id: string): Promise<void> => {

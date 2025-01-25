@@ -38,38 +38,50 @@ import { useState } from "react";
         <DialogHeader>
           <DialogTitle>Edit Item</DialogTitle>
           <DialogDescription>
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              className="p-3 text-lg border-2 rounded-lg w-full"
-              onChange={onItemChange}
-              value={editingItem.name}
-            />
-            <input
-              type="number"
-              name="price"
-              placeholder="Price"
-              className="p-3 text-lg border-2 rounded-lg w-full mt-2"
-              onChange={onItemChange}
-              value={editingItem.price}
-            />
-            <input
-              type="number"
-              name="quantity"
-              placeholder="Quantity"
-              className="p-3 text-lg border-2 rounded-lg w-full mt-2"
-              onChange={onItemChange}
-              value={editingItem.quantity}
-            />
-            <input
-              type="text"
-              name="category"
-              placeholder="Category"
-              className="p-3 text-lg border-2 rounded-lg w-full mt-2"
-              onChange={onItemChange}
-              value={editingItem.category}
-            />
+            <label className="block mt-2">
+              Name:
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                className="p-3 text-lg border-2 rounded-lg w-full"
+                onChange={onItemChange}
+                value={editingItem.name}
+              />
+            </label>
+            <label className="block mt-2">
+              Price:
+              <input
+                type="number"
+                name="price"
+                placeholder="Price"
+                className="p-3 text-lg border-2 rounded-lg w-full mt-2"
+                onChange={onItemChange}
+                value={editingItem.price}
+              />
+            </label>
+            <label className="block mt-2">
+              Quantity:
+              <input
+                type="number"
+                name="quantity"
+                placeholder="Quantity"
+                className="p-3 text-lg border-2 rounded-lg w-full mt-2"
+                onChange={onItemChange}
+                value={editingItem.quantity}
+              />
+            </label>
+            <label className="block mt-2">
+              Category:
+              <input
+                type="text"
+                name="category"
+                placeholder="Category"
+                className="p-3 text-lg border-2 rounded-lg w-full mt-2"
+                onChange={onItemChange}
+                value={editingItem.category}
+              />
+            </label>
             <button onClick={()=>{
               updateItem(editingItem._id,editingItem)
               closeDialog()
