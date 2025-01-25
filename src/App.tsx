@@ -11,7 +11,6 @@ function App() {
           <div className='text-white text-4xl font-bold'>Inventory</div>
         </div>
       </nav>
-
       <Inventory />
     </div>
   )
