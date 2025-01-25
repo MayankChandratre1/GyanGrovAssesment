@@ -1,14 +1,10 @@
-import { InventoryItem } from "@/types/inventoryItem";
 import DeleteDialog from "./DeleteDialog";
 import EditDialog from "./EditDialog";
+import useInventory from "@/hooks/useInventory";
 
-interface ItemsTableProps {
-    items: InventoryItem[];
-    removeItem: (id: string) => void;
-    updateItem: (id: string, updatedItem: InventoryItem) => void;
-}
 
-const ItemsTable = ({items, removeItem, updateItem}: ItemsTableProps) => {
+const ItemsTable = () => {
+    const {filteredItems: items, removeItem, updateItem} = useInventory();
     return (
         <div className="">
             <table className="w-full mt-4 border border-gray-800 rounded-md">

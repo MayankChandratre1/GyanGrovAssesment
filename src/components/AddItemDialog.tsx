@@ -6,17 +6,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { InventoryItem } from "@/types/inventoryItem";
+import useInventory from "@/hooks/useInventory";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
-interface AddItemDialogProps {
-  newItem: InventoryItem;
-  onNewItemChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  addItem: (item: InventoryItem) => void;
-}
 
-const AddItemDialog = ({newItem, onNewItemChange, addItem}:AddItemDialogProps) => {
+const AddItemDialog = () => {
+  const {newItem, onNewItemChange, addItem} = useInventory()
   const [open, setOpen] = useState(false);
   const closeDialog = () => setOpen(false);
   return (
