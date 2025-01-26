@@ -13,6 +13,8 @@ const Inventory = () => {
     setSortBy,
     setSortMode,
     setSearch,
+    filteredItems,
+    addItem
   } = useInventory();
 
   return (
@@ -92,10 +94,10 @@ const Inventory = () => {
               )}
             </button>
           </div>
-          <AddItemDialog />
+          <AddItemDialog addItem={addItem} />
         </div>
       </div>
-      <ItemsTable />
+      <ItemsTable items={filteredItems} />
     </div>
   );
 };

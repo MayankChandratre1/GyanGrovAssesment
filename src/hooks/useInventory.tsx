@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 
 
 const useInventory = () => {
-    const [items, setItems] = useState<InventoryItem[]>([]);
+  const [items, setItems] = useState<InventoryItem[]>([]);
   const [filteredItems, setFilteredItems] = useState<InventoryItem[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<string>("name");
@@ -124,12 +124,7 @@ const useInventory = () => {
     }
   };
 
-  const onNewItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewItem({
-      ...newItem,
-      [e.target.name]: e.target.value
-    })
-  }
+  
 
 
   return {
@@ -147,7 +142,6 @@ const useInventory = () => {
     addItem,
     removeItem,
     updateItem,
-    onNewItemChange
   }
 }
 

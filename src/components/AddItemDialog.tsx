@@ -6,21 +6,40 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import useInventory from "@/hooks/useInventory";
+import { InventoryItem } from "@/types/inventoryItem";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
+interface AddItemDialogProps {
+  addItem: (item: InventoryItem) => Promise<void>
+}
 
-const AddItemDialog = () => {
-  const {newItem, onNewItemChange, addItem} = useInventory()
+const AddItemDialog = ({addItem}:AddItemDialogProps) => {
+  const [newItem, setNewItem] = useState<InventoryItem>({
+    _id: "",
+    name: "",
+    price: 0,
+    quantity: 0,
+    category: "",
+    lastModified: new Date(),
+  })
   const [open, setOpen] = useState(false);
   const closeDialog = () => setOpen(false);
+
+  const onNewItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewItem({
+      ...newItem,
+      [e.target.name]: e.target.value
+    })
+  }
+
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
     <DialogTrigger>
-      <button className="p-3 bg-green-500 text-white rounded-lg flex items-center">
+      <div className="p-3 bg-green-500 text-white rounded-lg flex items-center cursor-pointer">
         <Plus className="w-5 h-5" />
-      </button>
+      </div>
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>

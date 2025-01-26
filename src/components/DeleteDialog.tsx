@@ -21,7 +21,7 @@ const DeleteDialog = ({removeItem, id}:DeleteDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
     <DialogTrigger>
-    <button className="p-2 bg-red-500 text-white rounded-lg"><Trash2 className="w-4 h-4 " /></button>
+    <div className="cursor-pointer p-2 bg-red-500 text-white rounded-lg"><Trash2 className="w-4 h-4 " /></div>
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>

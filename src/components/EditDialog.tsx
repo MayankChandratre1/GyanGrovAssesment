@@ -30,9 +30,9 @@ import { useState } from "react";
     return (
       <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <button className="p-2 bg-blue-500 text-white rounded-lg flex items-center">
+        <div className=" cursor-pointer p-2 bg-blue-500 text-white rounded-lg flex items-center">
           <PencilIcon  className="w-4 h-4 "/>
-        </button>
+        </div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
